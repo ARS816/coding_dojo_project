@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/profile.css')}}">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="nav">
+        <h2> Welcome, {{user.username}} </h2>
+        <div class="right_nav">
+            <a href="/challenge/new">New Challenge | </a>
+            <a href="/challenges/all">Browse Challenges | </a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="post">
+            <h3>Completed a challenge? <a href="/create_post">Post about it!</a></h3>
+        </div>
+        <div class="all-posts">
+            <h3>All Posts</h3>
+            {%for post in posts %}
+                <p><span>{{post.user_id.username}} completed a new challenge! {{post.created_at.strftime("%b %d")}}: </span><br>
+                <span class="m-3"> Challenge Completed : {{challenge[0].challenge_id.description}} <br>
+                    Response: {{post.content}} 
+                    {% if post.user_id.id == user.id: %}
+                    <a href="/delete/{{post.id}}">delete</a>
+                    {% endif %}
+                </p></span> 
+            {% endfor %}
+        </div>
+    </div>
+</div>

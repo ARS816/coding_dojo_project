@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/profile.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="nav">
+        <h2> Welcome, {{user.username}} </h2>
+        <div class="right_nav">
+            <a href="/challenge/new">New Challenge | </a>
+            <a href="/challenges/all">Browse Challenges | </a>
+            <a href="/profile">Back</a>
+        </div>
+    </div>
+    <div class="post">
+        <form action="/new_post" method="post">
+            <label for="new_post">Completed a challenge? Post about it:</label><br>
+                {% with messages = get_flashed_messages(category_filter = ['posts'])%}
+                    {% if messages %}
+                        {% for message in messages %} 
+                        <p class="text-danger"> {{message}} </p> 
+                        {% endfor %}
+                    {% endif %}
+                {%endwith%}
+                <div class="">
+                    <h3>Select Challenge Completed:</h3>
+                            <select name="challenge_id">
+                                {% for challenge in challenges %}
+                                <option value="{{challenge.id}}"> 
+                                    {{challenge.description}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                </div>
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <textarea name="content" cols="50" rows="5"></textarea><br>
+            <input type="submit" class="btn btn-primary mt-3" value="publish">
+        </form>
+    </div>
+</body>
+</html>
